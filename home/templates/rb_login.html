@@ -319,6 +319,52 @@
                   <div><input type="checkbox" /> Remember me</div>
                   <a href="#">Forgot password?</a>
                 </div>
+<!-- FORGOT PASSWORD MODAL -->
+<div id="forgotModal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,.4); align-items:center; justify-content:center;">
+  <div style="background:#fff; width:380px; border-radius:14px; padding:20px; box-shadow:0 20px 40px rgba(0,0,0,.15);">
+    
+    <h3 style="margin-top:0">Reset Password</h3>
+
+    <!-- STEP 1 -->
+    <div id="step1">
+      <label>Email or Mobile</label>
+      <div class="input-wrap">
+        <i class="bx bxs-user icon"></i>
+        <input type="text" id="fp_user" placeholder="Email or phone number">
+      </div>
+      <button class="btn" style="margin-top:12px" onclick="sendOTP()">Send OTP</button>
+    </div>
+
+    <!-- STEP 2 -->
+    <div id="step2" style="display:none">
+      <label>Enter OTP</label>
+      <div class="input-wrap">
+        <i class="bx bxs-key icon"></i>
+        <input type="text" id="fp_otp" placeholder="6 digit OTP">
+      </div>
+      <button class="btn" style="margin-top:12px" onclick="verifyOTP()">Verify OTP</button>
+    </div>
+
+    <!-- STEP 3 -->
+    <div id="step3" style="display:none">
+      <label>New Password</label>
+      <div class="input-wrap">
+        <i class="bx bxs-lock-alt icon"></i>
+        <input type="password" id="fp_new">
+      </div>
+
+      <label style="margin-top:10px">Confirm Password</label>
+      <div class="input-wrap">
+        <i class="bx bxs-lock-alt icon"></i>
+        <input type="password" id="fp_confirm">
+      </div>
+
+      <button class="btn" style="margin-top:12px" onclick="resetPassword()">Update Password</button>
+    </div>
+
+    <button onclick="closeForgot()" class="btn ghost" style="margin-top:10px">Cancel</button>
+  </div>
+</div>
 
                 <button type="submit" class="btn" style="margin-top: 12px">
                   Sign In
@@ -446,6 +492,40 @@
           togglePwdLogin.innerHTML = '<i class="bx bx-hide"></i>';
         }
       });
+  const forgotModal = document.getElementById("forgotModal");
+
+  document.querySelector(".forgot-row a").addEventListener("click", e => {
+    e.preventDefault();
+    forgotModal.style.display = "flex";
+  });
+
+  function closeForgot() {
+    forgotModal.style.display = "none";
+    step1.style.display = "block";
+    step2.style.display = "none";
+    step3.style.display = "none";
+  }
+
+  const step1 = document.getElementById("step1");
+  const step2 = document.getElementById("step2");
+  const step3 = document.getElementById("step3");
+
+  function sendOTP() {
+    // backend call here
+    step1.style.display = "none";
+    step2.style.display = "block";
+  }
+
+  function verifyOTP() {
+    // backend OTP verification
+    step2.style.display = "none";
+    step3.style.display = "block";
+  }
+
+  function resetPassword() {
+    alert("Password updated successfully");
+    closeForgot();
+  }
     </script>
   </body>
 </html>
